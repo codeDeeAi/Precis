@@ -1,0 +1,16 @@
+{
+    "name": "dee/precis-framework",
+    "description": "A fullstack php framework",
+    "autoload": {
+        "psr-4": {
+            "App\\": "./"
+        }
+    },
+    "authors": [{
+        "name": "Adeola Bada",
+        "email": "dunsin.bada@gmail.com"
+    }],
+    "require": {
+        "twig/twig": "^3.5"
+    }
+}
