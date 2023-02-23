@@ -6,11 +6,13 @@ namespace App\Core;
 
 use App\Core\Router;
 use App\Core\Request;
+use App\Core\View;
 
 class Application
 {
     # Properties
     public Router $router;
+    public View $view;
     public static SELF $app;
 
     /**
@@ -26,6 +28,7 @@ class Application
             new Request,
             new Response
         );
+        $this->view = new View();
     }
 
     public function run()
