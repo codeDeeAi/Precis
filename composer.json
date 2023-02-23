@@ -3,7 +3,7 @@
     "description": "A fullstack php framework",
     "autoload": {
         "psr-4": {
-            "App\\": "./"
+            "App\\": "./app"
         }
     },
     "authors": [{
@@ -11,6 +11,6 @@
         "email": "dunsin.bada@gmail.com"
     }],
     "require": {
-        "twig/twig": "^3.5"
+        "jenssegers/blade": "^1.4"
     }
 }

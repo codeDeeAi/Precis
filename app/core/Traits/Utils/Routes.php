@@ -11,7 +11,7 @@ trait Routes
      * @param string $path
      * @param array $data - defaults to []
      * @param string $base_path - defaults to views folder 
-     * @param string $extension - defaults to 'php' 
+     * @param string $extension - defaults to 'twig' 
      * @return Void 
      */
     public function toView(
