@@ -63,7 +63,7 @@ class Router
             return $this->toView($callback);
         } else if (is_array($callback)) {
             ## Controller to action
-            $class = new $callback[0]();
+            $class = new $callback[0];
             $action = $callback[1];
             call_user_func([$class, $action]);
             return;
