@@ -54,7 +54,7 @@ class Router
     {
         $path = $this->request->getPath();
         $method = $this->request->getMethod($toLowerCase = true);
-        $callback = $this->routes['get'][$path] ?? false;
+        $callback = $this->routes[$method][$path] ?? false;
 
         if ($callback === false) {
             return $this->response->setStatusCode(404);

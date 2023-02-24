@@ -17,6 +17,11 @@ $app->router->registerRoutes(
             'action' => [HomeController::class, 'index']
         ],
         [
+            'method' => 'POST',
+            'path' => '/post',
+            'action' => [HomeController::class, 'store']
+        ],
+        [
             'method' => 'GET',
             'path' => '/test',
             'action' => 'contact'
@@ -24,5 +29,7 @@ $app->router->registerRoutes(
 
     ]
 );
+
+// var_dump($app->router->routes);
 
 $app->run();
