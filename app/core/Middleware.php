@@ -8,6 +8,12 @@ use App\Core\Interfaces\Middleware as InterfacesMiddleware;
 use App\Core\Request;
 use App\Core\Response;
 
+/**
+ * Class Middleware
+ * 
+ * @author Adeola Bada <dunsin.bada@gmail.com>
+ * @package App\Core
+ */
 class Middleware implements InterfacesMiddleware
 {
     protected Application $app;

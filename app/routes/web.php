@@ -33,6 +33,12 @@ class Web implements RouteFile
                 'action' => [HomeController::class, 'test'],
                 'middleware' => Test::class
             ],
+
+            [
+                'method' => 'GET',
+                'path' => '/model',
+                'action' => [HomeController::class, 'test'],
+            ],
         ];
     }
 }

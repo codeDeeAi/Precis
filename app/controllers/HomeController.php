@@ -8,6 +8,7 @@ use App\Core\Controller as BaseController;
 use App\Middlewares\Test;
 use App\Core\Request;
 use App\Core\Traits\Utils\CommonHelpers;
+use App\Models\UserModel;
 
 class HomeController extends BaseController
 {
@@ -38,6 +39,10 @@ class HomeController extends BaseController
 
     public function test()
     {
-        $this->dd(Request::server());
+        $userModel = new UserModel();
+        $this->dd(
+            $userModel->getProperty('TABLE'),
+            $userModel->getProperty('columns')
+        );
     }
 }

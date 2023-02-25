@@ -8,6 +8,12 @@ use App\Core\Router;
 use App\Core\Request;
 use App\Core\View;
 
+/**
+ * Class Application
+ * 
+ * @author Adeola Bada <dunsin.bada@gmail.com>
+ * @package App\Core
+ */
 class Application
 {
     # Properties
@@ -15,12 +21,6 @@ class Application
     public View $view;
     public static SELF $app;
 
-    /**
-     * Class App
-     * 
-     * @author Adeola Bada <dunsin.bada@gmail.com>
-     * @package App\Core
-     */
     public function __construct()
     {
         self::$app = $this;
