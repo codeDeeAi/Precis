@@ -12,6 +12,15 @@ namespace App\Core;
  */
 class Request
 {
+    public array $placeholder;
+    /**
+     * Get request server/details
+     * @return array
+     */
+    public static function server(): array
+    {
+        return $_SERVER;
+    }
     /**
      * Get current request path
      * @return String

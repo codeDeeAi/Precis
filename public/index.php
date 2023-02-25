@@ -24,7 +24,7 @@ $app->router->registerRoutes(
         [
             'method' => 'GET',
             'path' => '/test',
-            'action' => 'contact'
+            'action' => [HomeController::class, 'test']
         ],
 
     ]
