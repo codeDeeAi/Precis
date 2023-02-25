@@ -33,17 +33,26 @@ class Router
 
     /**
      * Register a route with Get method
+     * @param String $method
+     * @param String $path
+     * @param Boolean|String|Array|Callable $callback
+     * @param String|Array|Callable $middleware
+     * @return Array
      */
     public function route(
         string $method,
         string $path,
-        bool|string|array|callable $callback
+        bool|string|array|callable $callback,
+        string|array|callable $middleware = []
     ) {
         if (!$this->validateRequestMethod($method)) {
             throw new Exception("Not a valid request method", 500);
         }
 
-        $this->routes[strtolower($method)][$path] = $callback;
+        $this->routes[strtolower($method)][$path] = $this->createRouteAction(
+            $callback = $callback,
+            $middleware = $middleware,
+        );
         return;
     }
 
@@ -54,21 +63,13 @@ class Router
     {
         $path = $this->request->getPath();
         $method = $this->request->getMethod($toLowerCase = true);
-        $callback = $this->routes[$method][$path] ?? false;
+        $route_actions = $this->routes[$method][$path] ?? false;
+        $callback = $route_actions['action'] ?? false;
+        $middleware = $route_actions['middleware'] ?? [];
 
-        if ($callback === false) {
-            return $this->response->setStatusCode(404);
-        } else if (is_string($callback)) {
-            ## Render view
-            return $this->toView($callback);
-        } else if (is_array($callback)) {
-            ## Controller to action
-            $class = new $callback[0];
-            $action = $callback[1];
-            call_user_func([$class, $action]);
-            return;
-        }
-        call_user_func($callback);
+        $this->runMiddleware($middleware = $middleware);
+
+        $this->handleRouteCallback($callback = $callback);
     }
 
     /**
@@ -89,7 +90,8 @@ class Router
                 $this->route(
                     $method = $route['method'],
                     $path = $route['path'],
-                    $callback = $route['action']
+                    $callback = $route['action'],
+                    $middleware = $route['middleware'] ?? []
                 );
             }
         }
@@ -107,5 +109,67 @@ class Router
             return false;
         }
         return true;
+    }
+
+    /**
+     * Create route action
+     * @param Boolean|String|Array|Callable $callback
+     * @param String|Array|Callable $middleware
+     * @return Array
+     */
+    private function createRouteAction(
+        bool|string|array|callable $callback,
+        string|array|callable $middleware = []
+    ): array {
+        return [
+            'action' => $callback,
+            'middleware' => $middleware,
+        ];
+    }
+
+    /**
+     * Create route action
+     * @param String|Array|Callable $middleware
+     * @return void
+     */
+    private function runMiddleware(
+        string|array|callable $middleware = []
+    ): void {
+
+        if (is_callable($middleware)) {
+            call_user_func($middleware);
+        }
+        if (is_string($middleware) && !empty($middleware)) {
+            call_user_func(new $middleware);
+        }
+        if (is_array($middleware) && !empty($middleware)) {
+            foreach ($middleware as $value) {
+                call_user_func(new $value);
+            }
+        }
+    }
+
+    /**
+     * Handle/Process route callback
+     * @param Boolean|String|Array|Callable $callback
+     * @return void
+     */
+    private function handleRouteCallback(
+        bool|string|array|callable $callback
+    ): void {
+        if ($callback === false) {
+            $this->response->setStatusCode(404);
+        } else if (is_string($callback)) {
+            ## Render view
+            $this->toView($callback);
+        } else if (is_array($callback)) {
+            ## Controller to action
+            $class = new $callback[0];
+            $action = $callback[1];
+            call_user_func([$class, $action]);
+        } else if (is_callable($callback)) {
+            call_user_func($callback);
+        }
+        return;
     }
 }

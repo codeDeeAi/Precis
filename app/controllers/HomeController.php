@@ -20,7 +20,7 @@ class HomeController extends BaseController
      */
     public function load(): void
     {
-        new Test();
+        // new Test();
     }
 
     public function index()
@@ -38,5 +38,6 @@ class HomeController extends BaseController
 
     public function test()
     {
+        $this->dd(Request::server());
     }
 }

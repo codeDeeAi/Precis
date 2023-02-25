@@ -14,5 +14,7 @@ class Test extends Middleware
 
     public function handle(){
         $this->request->placeholder = $this->request->server();
+
+        $this->dd('hello');
     }
 }
