@@ -7,7 +7,9 @@ namespace App\Controllers;
 use App\Core\Controller as BaseController;
 use App\Middlewares\Test;
 use App\Core\Request;
+use App\Core\Response;
 use App\Core\Traits\Utils\CommonHelpers;
+use App\Core\Validator;
 use App\Models\UserModel;
 
 class HomeController extends BaseController
@@ -39,10 +41,21 @@ class HomeController extends BaseController
 
     public function test()
     {
-        $userModel = new UserModel();
-        $this->dd(
-            $userModel->getProperty('TABLE'),
-            $userModel->getProperty('columns')
+        // $userModel = new UserModel();
+        // $response = (new Response)->setHeaders([
+        //     // "Expires: Sun, 22 Jun 1997 04:00:00 GMT",
+        //     // "Cache-Control: no-cache, must-revalidate",
+        //     // "Pragma: no-cache"
+        // ]);
+
+        // $response->view()->toView(
+        //     $path = 'homepage',
+        //     $data = []
+        // );
+        $this->dd(           
+            (new Validator((new Request()), [
+                'name' => ['string', 'empty']
+            ]))->validate()
         );
     }
 }
