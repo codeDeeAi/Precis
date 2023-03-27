@@ -54,4 +54,20 @@ class Model implements InterfacesModel
             default => NULL
         };
     }
+
+    public function create(array $properties)
+    {
+        var_dump($this);
+        die();
+        //   $this->query("CREATE TABLE Users (
+        //   id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+        //   username VARCHAR(255) NOT NULL,
+        //   birthdate DATE NOT NULL,
+        //   user_address VARCHAR(255) NOT NULL,
+        //   credit_card VARCHAR(255) NOT NULL,
+        //   credit_card_expiry VARCHAR(19) NOT NULL,
+        //   credit_card_cvv VARCHAR(3) NOT NULL,
+        //   avatar VARCHAR(255) NOT NULL
+        //   )");
+    }
 }

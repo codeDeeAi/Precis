@@ -46,7 +46,9 @@ class Validator
             ## Handle Errors / Throw exception errors
             $response = new Response();
             $response
-                ->setHeaders([])
+                ->setHeaders([
+                    'Content-Type: application/json; charset=utf-8'
+                ])
                 ->setStatusCode(422)
                 ->toJson($this->errors);
         } else {
@@ -108,10 +110,12 @@ class Validator
     private function validateRule(string $req_key, string $rule)
     {
         if (array_key_exists($req_key, $this->body)) {
-            $function = $this->config->getMethod($rule);
+            $rule_decode = $this->decodeRule($rule);
+            $function = $this->config->getMethod($rule_decode['rule']);
             $result = call_user_func_array($function, [
                 'key' => $req_key,
-                'value' => $this->body[$req_key]
+                'value' => $this->body[$req_key],
+                'options' => $rule_decode['options']
             ]);
 
             if (
@@ -155,5 +159,20 @@ class Validator
     private function addToValidated(string $key): void
     {
         $this->validated[$key] = $this->body[$key];
+    }
+
+    /**
+     * Decode Rule and Options
+     * @param String $rule
+     * @return array
+     */
+    private function decodeRule(string $rule): array
+    {
+        $rule_array = explode('~:~', $rule);
+
+        return [
+            'rule' => $rule_array[0],
+            'options' => (isset($rule_array[1])) ? [$rule_array[1]] : []
+        ];
     }
 }

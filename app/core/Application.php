@@ -7,6 +7,8 @@ namespace App\Core;
 use App\Core\Router;
 use App\Core\Request;
 use App\Core\View;
+use App\Core\Database;
+use App\Core\Config;
 
 /**
  * Class Application
@@ -19,6 +21,7 @@ class Application
     # Properties
     public Router $router;
     public View $view;
+    public ?Database $database = null;
     public static SELF $app;
 
     public function __construct()
@@ -29,6 +32,15 @@ class Application
             new Response
         );
         $this->view = new View();
+
+        if (isset(Config::main()['USE_DATABASE']) && Config::main()['USE_DATABASE'] == true) {
+            $this->database = new Database(
+                $servername = Config::main()['DATABASE_HOST'],
+                $database = Config::main()['DATABASE_NAME'],
+                $username = Config::main()['DATABASE_USERNAME'],
+                $password = Config::main()['DATABASE_PASSWORD']
+            );
+        };
     }
 
     public function run()

@@ -17,10 +17,15 @@ class Config
      * Get config items
      * @return Array
      */
-    public static function main(): Array
+    public static function main(): array
     {
         return [
-            'BASE_VIEW_PATH' => dirname(__DIR__, 1).'/views',
+            'BASE_VIEW_PATH' => dirname(__DIR__, 1) . '/views',
+            'USE_DATABASE' => true,
+            'DATABASE_HOST' => 'localhost',
+            'DATABASE_NAME' => 'custom_framework',
+            'DATABASE_USERNAME' => 'root',
+            'DATABASE_PASSWORD' => '',
         ];
     }
 }

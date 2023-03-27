@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controllers;
 
+use App\Core\Application;
 use App\Core\Controller as BaseController;
 use App\Middlewares\Test;
 use App\Core\Request;
@@ -53,9 +54,11 @@ class HomeController extends BaseController
         //     $data = []
         // );
         $this->dd(           
-            (new Validator((new Request()), [
-                'name' => ['string', 'empty']
-            ]))->validate()
+            // (new Validator((new Request()), [
+            //     'name' => ['string', 'empty']
+            // ]))->validate(),
+            // Application::$app->database,
+            (new UserModel)->create([])
         );
     }
 }

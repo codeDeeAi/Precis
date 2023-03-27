@@ -37,16 +37,269 @@ class ValidationRules
     {
         return
             [
-                'string' => function (string $key, mixed $value): array {
+                'string' => function (string $key, mixed $value, array $options = []): array {
                     return [
                         'status' => (is_string($value)) ? true : false,
                         'error' => "$key is not a valid string"
                     ];
                 },
-                'empty' => function (string $key, mixed $value): array {
+                'empty' => function (string $key, mixed $value, array $options = []): array {
                     return [
                         'status' => (!empty($value)) ? true : false,
                         'error' => "$key must not be empty"
+                    ];
+                },
+                'array' => function (string $key, mixed $value, array $options = []): array {
+                    return [
+                        'status' => (is_array($value)) ? true : false,
+                        'error' => "$key should be an array"
+                    ];
+                },
+                'boolean' => function (string $key, mixed $value, array $options = []): array {
+                    return [
+                        'status' => (is_bool($value)) ? true : false,
+                        'error' => "$key should be a boolean"
+                    ];
+                },
+                'integer' => function (string $key, mixed $value, array $options = []): array {
+                    return [
+                        'status' => (is_int($value)) ? true : false,
+                        'error' => "$key should be a valid integer"
+                    ];
+                },
+                'float' => function (string $key, mixed $value, array $options = []): array {
+                    return [
+                        'status' => (is_float($value)) ? true : false,
+                        'error' => "$key should be a valid float data type"
+                    ];
+                },
+                'object' => function (string $key, mixed $value, array $options = []): array {
+                    return [
+                        'status' => (is_object($value)) ? true : false,
+                        'error' => "$key should be a valid object data type"
+                    ];
+                },
+                'min' => function (string $key, mixed $value, array $options = []): array {
+                    if (!count($options) == 1) {
+                        throw new Exception("Invalid rule format: $key", 500);
+                    }
+                    if (is_string($value)) {
+                        $status = (strlen($value) >= (int) $options[0]) ? true : false;
+                        $error = "$key: should not be less than $options[0] characters";
+                    } else if (is_array($value)) {
+                        $status = (count($value) >= (int) $options[0]) ? true : false;
+                        $error = "$key: array length should not be less than $options[0]";
+                    } else if (is_int($value)) {
+                        $status = ($value >= (int) $options[0]) ? true : false;
+                        $error = "$key: should not be less than $options[0]";
+                    } else if (is_float($value)) {
+                        $status = ($value >= (float) $options[0]) ? true : false;
+                        $error = "$key: should not be less than $options[0]";
+                    } else {
+                        $status = ($value >= $options[0]) ? true : false;
+                        $error = "$key: should not be less than $options[0]";
+                    }
+                    return [
+                        'status' => $status,
+                        'error' => $error
+                    ];
+                },
+                'max' => function (string $key, mixed $value, array $options = []): array {
+                    if (!count($options) == 1) {
+                        throw new Exception("Invalid rule format: $key", 500);
+                    }
+                    if (is_string($value)) {
+                        $status = (strlen($value) <= (int) $options[0]) ? true : false;
+                        $error = "$key: should not be greater than $options[0] characters";
+                    } else if (is_array($value)) {
+                        $status = (count($value) <= (int) $options[0]) ? true : false;
+                        $error = "$key: array length should not be greater than $options[0]";
+                    } else if (is_int($value)) {
+                        $status = ($value <= (int) $options[0]) ? true : false;
+                        $error = "$key: should not be greater than $options[0]";
+                    } else if (is_float($value)) {
+                        $status = ($value <= (float) $options[0]) ? true : false;
+                        $error = "$key: should not be greater than $options[0]";
+                    } else {
+                        $status = ($value <= $options[0]) ? true : false;
+                        $error = "$key: should not be greater than $options[0]";
+                    }
+                    return [
+                        'status' => $status,
+                        'error' => $error
+                    ];
+                },
+                'in' => function (string $key, mixed $value, array $options = []): array {
+                    return [
+                        'status' => (in_array($value, explode(',', $options[0]))) ? true : false,
+                        'error' => "$key doesn't exist in options"
+                    ];
+                },
+                'not in' => function (string $key, mixed $value, array $options = []): array {
+                    return [
+                        'status' => (!in_array($value, explode(',', $options[0]))) ? true : false,
+                        'error' => "$key doesn't exist in options"
+                    ];
+                },
+                'numeric' => function (string $key, mixed $value, array $options = []): array {
+                    return [
+                        'status' => (is_numeric($value)) ? true : false,
+                        'error' => "$key should be of numeric type"
+                    ];
+                },
+                'file' => function (string $key, mixed $value, array $options = []): array {
+                    return [
+                        'status' => (is_file($value)) ? true : false,
+                        'error' => "$key should be of file type"
+                    ];
+                },
+                'lowercase' => function (string $key, string $value, array $options = []): array {
+                    return [
+                        'status' => (ctype_lower($value)) ? true : false,
+                        'error' => "$key should be lowercase"
+                    ];
+                },
+                'uppercase' => function (string $key, string $value, array $options = []): array {
+                    return [
+                        'status' => (ctype_upper($value)) ? true : false,
+                        'error' => "$key should be uppercase"
+                    ];
+                },
+                'email' => function (string $key, string $value, array $options = []): array {
+                    return [
+                        'status' => (filter_var($value, FILTER_VALIDATE_EMAIL)) ? true : false,
+                        'error' => "$key is not a valid email"
+                    ];
+                },
+                'uuid' => function (string $key, mixed $value, array $options = []): array {
+                    return [
+                        'status' => (preg_match("/^[0-9A-F]{8}-[0-9A-F]{4}-4[0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i", $value)) ? true : false,
+                        'error' => "$key is not a valid UUID"
+                    ];
+                },
+                'url' => function (string $key, mixed $value, array $options = []): array {
+                    return [
+                        'status' => (filter_var($value, FILTER_VALIDATE_URL)) ? true : false,
+                        'error' => "$key is not a valid URL"
+                    ];
+                },
+                'mime type' => function (string $key, mixed $value, array $options = []): array {
+                    if (count($options) !== 1) {
+                        throw new Exception("Invalid rule format: $key", 500);
+                    }
+
+                    $accepted_file_types = explode(',', $options[0]);
+
+                    if (is_file($value)) {
+                        $content_type = mime_content_type($value);
+
+                        if (in_array($content_type, $accepted_file_types)) {
+                            $status = true;
+                            $error = "";
+                        } else {
+                            $status = false;
+                            $error = "$key should be of file formats: $options[0]";
+                        }
+                    } else {
+                        $status = false;
+                        $error = "$key should be of file type";
+                    }
+
+                    return [
+                        'status' => $status,
+                        'error' => $error
+                    ];
+                },
+                'greater than' => function (string $key, mixed $value, array $options = []): array {
+                    if (!count($options) == 1) {
+                        throw new Exception("Invalid rule format: $key", 500);
+                    }
+                    if (is_string($value)) {
+                        $status = ($value > (string) $options[0]) ? true : false;
+                        $error = "$key: should be greater than $options[0]";
+                    } else if (is_int($value)) {
+                        $status = ($value > (int) $options[0]) ? true : false;
+                        $error = "$key: should be greater than $options[0]";
+                    } else if (is_float($value)) {
+                        $status = ($value > (float) $options[0]) ? true : false;
+                        $error = "$key: should be greater than $options[0]";
+                    } else {
+                        $status = ($value > $options[0]) ? true : false;
+                        $error = "$key: should be greater than $options[0]";
+                    }
+
+                    return [
+                        'status' => $status,
+                        'error' => $error
+                    ];
+                },
+                'greater than or equal' => function (string $key, mixed $value, array $options = []): array {
+                    if (!count($options) == 1) {
+                        throw new Exception("Invalid rule format: $key", 500);
+                    }
+                    if (is_string($value)) {
+                        $status = ($value >= (string) $options[0]) ? true : false;
+                        $error = "$key: should be greater than or equal to $options[0]";
+                    } else if (is_int($value)) {
+                        $status = ($value >= (int) $options[0]) ? true : false;
+                        $error = "$key: should be greater than or equal to $options[0]";
+                    } else if (is_float($value)) {
+                        $status = ($value >= (float) $options[0]) ? true : false;
+                        $error = "$key: should be greater than or equal to $options[0]";
+                    } else {
+                        $status = ($value >= $options[0]) ? true : false;
+                        $error = "$key: should be greater than or equal to $options[0]";
+                    }
+
+                    return [
+                        'status' => $status,
+                        'error' => $error
+                    ];
+                },
+                'less than' => function (string $key, mixed $value, array $options = []): array {
+                    if (!count($options) == 1) {
+                        throw new Exception("Invalid rule format: $key", 500);
+                    }
+                    if (is_string($value)) {
+                        $status = ($value < (string) $options[0]) ? true : false;
+                        $error = "$key: should be less than $options[0]";
+                    } else if (is_int($value)) {
+                        $status = ($value < (int) $options[0]) ? true : false;
+                        $error = "$key: should be less than $options[0]";
+                    } else if (is_float($value)) {
+                        $status = ($value < (float) $options[0]) ? true : false;
+                        $error = "$key: should be less than $options[0]";
+                    } else {
+                        $status = ($value < $options[0]) ? true : false;
+                        $error = "$key: should be less than $options[0]";
+                    }
+
+                    return [
+                        'status' => $status,
+                        'error' => $error
+                    ];
+                },
+                'less than or equal' => function (string $key, mixed $value, array $options = []): array {
+                    if (!count($options) == 1) {
+                        throw new Exception("Invalid rule format: $key", 500);
+                    }
+                    if (is_string($value)) {
+                        $status = ($value <= (string) $options[0]) ? true : false;
+                        $error = "$key: should be less than or equal to $options[0]";
+                    } else if (is_int($value)) {
+                        $status = ($value <= (int) $options[0]) ? true : false;
+                        $error = "$key: should be less than or equal to $options[0]";
+                    } else if (is_float($value)) {
+                        $status = ($value <= (float) $options[0]) ? true : false;
+                        $error = "$key: should be less than or equal to $options[0]";
+                    } else {
+                        $status = ($value <= $options[0]) ? true : false;
+                        $error = "$key: should be less than or equal to $options[0]";
+                    }
+
+                    return [
+                        'status' => $status,
+                        'error' => $error
                     ];
                 },
                 // case ACCEPTED;
@@ -57,14 +310,11 @@ class ValidationRules
                 // case Alpha;
                 // case Alpha Dash;
                 // case Alpha Numeric;
-                // case ARRAY;
-                // case BOOLEAN;
                 // case Confirmed;
                 // case Current Passwordcase ;
                 // case Date;
                 // case Date Equals;
                 // case Date Format;
-                // case Decimal;
                 // case Declined;
                 // case Declined If;
                 // case Different;
@@ -74,7 +324,6 @@ class ValidationRules
                 // case Distinct;
                 // case Doesnt Start With;
                 // case Doesnt End With;
-                // case Email;
                 // case Ends With;
                 // case Enum;
                 // case Exclude;
@@ -83,25 +332,15 @@ class ValidationRules
                 // case Exclude With;
                 // case Exclude Without;
                 // case Exists (Database);
-                // case File;
                 // case Filled;
-                // case Greater Than;
-                // case Greater Than Or Equal;
                 // case Image (File);
-                // case In;
                 // case In Array;
-                // case Integer;
                 // case IP Address;
                 // case JSON;
-                // case Less Than;
-                // case Less Than Or Equal;
-                // case Lowercase;
                 // case MAC Address;
-                // case Max;
                 // case Max Digits;
                 // case MIME Types;
                 // case MIME Type By File Extension;
-                // case Min;
                 // case Min Digits;
                 // case Missing;
                 // case Missing If;
@@ -109,10 +348,7 @@ class ValidationRules
                 // case Missing With;
                 // case Missing With All;
                 // case Multiple Of;
-                // case Not In;
                 // case Not Regex;
-                // case Nullable;
-                // case Numeric;
                 // case Password;
                 // case Present;
                 // case Prohibited;
@@ -132,13 +368,9 @@ class ValidationRules
                 // case Size;
                 // case Sometimes;
                 // case Starts With;
-                // case String;
                 // case Timezone;
                 // case Unique (Database);
-                // case Uppercase;
-                // case URL;
                 // case ULID;
-                // case UUID;
             ];
     }
 }

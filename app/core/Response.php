@@ -39,12 +39,13 @@ class Response
      * @param Int $code
      * @return self
      */
-    public function setStatusCode(int $code): self
+    public function setStatusCode(int $code): Self
     {
         http_response_code($code);
 
         return $this;
     }
+    
     /**
      * Return array to json 
      * @param array $data
