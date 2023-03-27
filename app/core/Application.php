@@ -9,6 +9,8 @@ use App\Core\Request;
 use App\Core\View;
 use App\Core\Database;
 use App\Core\Config;
+use App\Core\Traits\Utils\CommonHelpers;
+
 
 /**
  * Class Application
@@ -18,10 +20,13 @@ use App\Core\Config;
  */
 class Application
 {
+    use CommonHelpers;
+
     # Properties
     public Router $router;
     public View $view;
     public ?Database $database = null;
+    public $cli;
     public static SELF $app;
 
     public function __construct()
@@ -46,5 +51,6 @@ class Application
     public function run()
     {
         $this->router->resolve();
+       
     }
 }
