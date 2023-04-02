@@ -22,10 +22,13 @@ class Config
         return [
             'BASE_VIEW_PATH' => dirname(__DIR__, 1) . '/views',
             'USE_DATABASE' => true,
+            'DATABASE_ADAPTER' => 'mysql',
+            'DATABASE_ENVIRONMENT' => 'development',
             'DATABASE_HOST' => 'localhost',
             'DATABASE_NAME' => 'custom_framework',
             'DATABASE_USERNAME' => 'root',
             'DATABASE_PASSWORD' => '',
+            'DATABASE_CHARSET' => 'utf8',
         ];
     }
 }
