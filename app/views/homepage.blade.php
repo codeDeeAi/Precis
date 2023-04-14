@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>New Framework Ad</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.1.1/tailwind.min.css">
+    <link rel="stylesheet" href="/css/tailwind.css">
 </head>
 <body class="bg-gray-100">
     <header class="bg-white shadow">

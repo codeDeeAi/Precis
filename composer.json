@@ -13,6 +13,8 @@
     "require": {
         "jenssegers/blade": "^1.4",
         "robmorgan/phinx": "^0.13.4",
-        "symfony/console": "^6.2"
+        "symfony/console": "^6.2",
+        "illuminate/database": "^1.1",
+        "illuminate/events": "^8.83"
     }
 }

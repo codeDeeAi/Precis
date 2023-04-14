@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Core;
 
 use App\Core\Interfaces\Model as InterfacesModel;
+use App\Core\Orm\BuilderORM;
 use Exception;
 
 /**
@@ -17,6 +18,15 @@ class Model implements InterfacesModel
 {
     protected string $table = '';
     protected array $columns = [];
+    protected array $hidden_columns = [];
+    protected array $casts = [];
+    protected array $append = [];
+    protected BuilderORM $builder;
+
+    public function __construct()
+    {
+       $this->builder = new BuilderORM($table = $this->table);
+    }
 
     /**
      * Set Model Properties
@@ -31,6 +41,15 @@ class Model implements InterfacesModel
         if (isset($properties['COLUMNS']) && is_array($properties['COLUMNS'])) {
             $this->columns = $properties['COLUMNS'];
         }
+        if (isset($properties['HIDDEN_COLUMNS']) && is_array($properties['HIDDEN_COLUMNS'])) {
+            $this->hidden_columns = $properties['HIDDEN_COLUMNS'];
+        }
+        if (isset($properties['APPEND']) && is_array($properties['APPEND'])) {
+            $this->append = $properties['APPEND'];
+        }
+        if (isset($properties['CASTS']) && is_array($properties['CASTS'])) {
+            $this->casts = $properties['CASTS'];
+        }
     }
 
     /**
@@ -43,7 +62,7 @@ class Model implements InterfacesModel
         $property = strtolower($property);
         if (!in_array(
             $property,
-            ['table', 'columns']
+            ['table', 'columns', 'hidden_columns']
         )) {
             throw new Exception("$property not found in model", 500);
         }
@@ -51,6 +70,7 @@ class Model implements InterfacesModel
         return match ($property) {
             'table' => $this->table,
             'columns' => $this->columns,
+            'hidden_columns' => $this->hidden_columns,
             default => NULL
         };
     }

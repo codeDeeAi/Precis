@@ -14,7 +14,8 @@ class UserModel extends BaseModel
         # Set default model properties ('TABLE', 'COLUMNS')
         $this->setProperties([
             'TABLE' => 'users',
-            'COLUMNS' => ['id', 'name', 'password'],
+            'COLUMNS' => ['username', 'password', 'email', 'first_name', 'last_name', 'created', 'updated'],
+            'HIDDEN_COLUMNS' => ['password']
         ]);
     }
 }

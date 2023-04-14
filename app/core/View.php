@@ -24,7 +24,7 @@ class View
     public function __construct()
     {
         $this->view_root = Config::main()['BASE_VIEW_PATH'] ?? dirname(__DIR__, 1) . '/views';
-        $this->blade = new Blade($this->view_root, 'cache');
+        $this->blade = new Blade($this->view_root, 'cache/views');
     }
 
     /**

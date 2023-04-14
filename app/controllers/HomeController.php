@@ -42,7 +42,7 @@ class HomeController extends BaseController
 
     public function test()
     {
-        // $userModel = new UserModel();
+        $userModel = new UserModel();
         // $response = (new Response)->setHeaders([
         //     // "Expires: Sun, 22 Jun 1997 04:00:00 GMT",
         //     // "Cache-Control: no-cache, must-revalidate",
@@ -58,7 +58,7 @@ class HomeController extends BaseController
             //     'name' => ['string', 'empty']
             // ]))->validate(),
             // Application::$app->database,
-            (new UserModel)->create([])
+            $userModel
         );
     }
 }

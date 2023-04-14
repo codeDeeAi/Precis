@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e03d535e4a3d2256c7bcc97192cc75c3",
+    "content-hash": "5f0d4b0e1701b53512be9b2cb77d6b1f",
     "packages": [
         {
             "name": "cakephp/core",
@@ -535,6 +535,57 @@
                 "source": "https://github.com/laravel/framework"
             },
             "time": "2022-01-13T14:47:47+00:00"
+        },
+        {
+            "name": "illuminate/database",
+            "version": "v1.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/illuminate/database.git",
+                "reference": "50eb3a77e2fac0acb3a9e0bd03ed1fe04191ebf6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/illuminate/database/zipball/50eb3a77e2fac0acb3a9e0bd03ed1fe04191ebf6",
+                "reference": "50eb3a77e2fac0acb3a9e0bd03ed1fe04191ebf6",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/events": ">=1.0.0",
+                "illuminate/support": ">=1.0.0",
+                "php": ">=5.3.0"
+            },
+            "require-dev": {
+                "illuminate/console": ">=1.0.0",
+                "illuminate/filesystem": ">=1.0.0",
+                "illuminate/pagination": ">=1.0.0",
+                "illuminate/support": ">=1.0.0",
+                "mockery/mockery": "0.7.2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Illuminate\\Database": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "authors": [
+                {
+                    "name": "Taylor Otwell",
+                    "email": "taylorotwell@gmail.com",
+                    "homepage": "https://github.com/taylorotwell",
+                    "role": "Creator of Laravel"
+                }
+            ],
+            "description": "An elegant database abstraction library.",
+            "keywords": [
+                "laravel"
+            ],
+            "support": {
+                "issues": "https://github.com/illuminate/database/issues",
+                "source": "https://github.com/illuminate/database/tree/v1.1.1"
+            },
+            "time": "2012-12-05T20:02:04+00:00"
         },
         {
             "name": "illuminate/events",
