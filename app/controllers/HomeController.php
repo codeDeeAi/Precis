@@ -31,7 +31,20 @@ class HomeController extends BaseController
     {
         $this->app->view->toView(
             $path = 'homepage',
-            $data = []
+            $data = [
+                'features' => [
+                    'Custom Routing',
+                    'Composer',
+                    'Controllers',
+                    'Views and Layouts',
+                    'Models',
+                    'Migrations',
+                    'Validations',
+                    'Simple Active Records',
+                    'Middlewares',
+                    'Pest for Testing',
+                ]
+            ]
         );
     }
 
@@ -54,12 +67,12 @@ class HomeController extends BaseController
         //     $path = 'homepage',
         //     $data = []
         // );
-        $this->dd(           
-        //     // (new Validator((new Request()), [
-        //     //     'name' => ['string', 'empty']
-        //     // ]))->validate(),
-        //     // Application::$app->database,
-        //     // $userModel
+        $this->dd(
+            //     // (new Validator((new Request()), [
+            //     //     'name' => ['string', 'empty']
+            //     // ]))->validate(),
+            //     // Application::$app->database,
+            //     // $userModel
             $users
         );
     }
