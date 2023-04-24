@@ -6,6 +6,12 @@ namespace App\Core;
 
 use App\Core\Interfaces\Controller as InterfacesController;
 
+/**
+ * Class Controller
+ * 
+ * @author Adeola Bada <dunsin.bada@gmail.com>
+ * @package App\Core
+ */
 class Controller implements InterfacesController
 {
     protected Application $app;

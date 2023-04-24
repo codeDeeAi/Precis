@@ -22,6 +22,14 @@ class Request
         return $_SERVER;
     }
     /**
+     * Get request headers
+     * @return array
+     */
+    public static function headers(): array
+    {
+        return getallheaders();
+    }
+    /**
      * Get current request path
      * @return String
      */

@@ -1,0 +1,24 @@
+{
+    "name": "precis-framework",
+    "version": "1.0.0",
+    "description": " A fullstack php MVC framework",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "watch": "npx tailwindcss -i src/css/tailwind.css -o public/css/tailwind.css --watch",
+        "build": "tailwindcss build src/css/tailwind.css -o public/css/tailwind.css"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/codeDeeAi/Precis.git"
+    },
+    "author": "Bada Adeola",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/codeDeeAi/Precis/issues"
+    },
+    "homepage": "https://github.com/codeDeeAi/Precis#readme",
+    "dependencies": {
+        "tailwindcss": "^3.3.1"
+    }
+}
