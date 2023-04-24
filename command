@@ -3,9 +3,6 @@
 
 require_once 'vendor/autoload.php';
 
-use App\Commands\DefaultCommand;
-use App\Commands\GreetCommand;
-use App\Commands\PhinxCommand;
 use Symfony\Component\Console\Application;
 
 # Common Class to instanciate traits
@@ -20,9 +17,10 @@ $app = new Application();
 
 # Register Commands
 $allCommands = [
-    DefaultCommand::class,
-    PhinxCommand::class,
-    GreetCommand::class
+    \App\Commands\DefaultCommand::class,
+    \App\Commands\PhinxCommand::class,
+    \App\Commands\PestCommand::class,
+    \App\Commands\GreetCommand::class,
 ];
 
 $useTraits->childrenMustBeOfType($allCommands, ['string']);

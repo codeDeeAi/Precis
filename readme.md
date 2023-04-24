@@ -12,7 +12,7 @@ Précis is a custom php framework created to undestand how other php frameworks 
 - Validations
 - Simple Active Records
 - Middlewares
-- Events etc
+- PHP Pest for testing
 
 `Note: This framework is a fun project and is not intended for production use`
 

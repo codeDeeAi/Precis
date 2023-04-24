@@ -18,5 +18,13 @@
         "illuminate/database": "^8.12",
         "illuminate/events": "^8.83",
         "vlucas/phpdotenv": "^5.5"
+    },
+    "require-dev": {
+        "pestphp/pest": "^1.23"
+    },
+    "config": {
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        }
     }
 }
