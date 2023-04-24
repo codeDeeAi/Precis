@@ -9,7 +9,9 @@ use App\Core\Request;
 use App\Core\View;
 use App\Core\Database;
 use App\Core\Config;
+use App\Core\Orm\CapsuleORM;
 use App\Core\Traits\Utils\CommonHelpers;
+use \Illuminate\Database\Capsule\Manager as CapsuleManager;
 
 
 /**
@@ -28,6 +30,7 @@ class Application
     public ?Database $database = null;
     public $cli;
     public static SELF $app;
+    public CapsuleManager $capsule;
 
     public function __construct()
     {
@@ -37,6 +40,12 @@ class Application
             new Response
         );
         $this->view = new View();
+
+        $capsule = new CapsuleORM();
+
+        $capsule->boot();
+
+        $this->capsule = $capsule->getManager();
 
         if (isset(Config::main()['USE_DATABASE']) && Config::main()['USE_DATABASE'] == true) {
             $this->database = new Database(
@@ -51,6 +60,5 @@ class Application
     public function run()
     {
         $this->router->resolve();
-       
     }
 }

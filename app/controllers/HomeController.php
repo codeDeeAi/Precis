@@ -24,7 +24,7 @@ class HomeController extends BaseController
      */
     public function load(): void
     {
-        // new Test();
+        // You can init controller level middleware like this: new Test();
     }
 
     public function index()
@@ -42,7 +42,8 @@ class HomeController extends BaseController
 
     public function test()
     {
-        $userModel = new UserModel();
+        $users = UserModel::all()->toJson();
+
         // $response = (new Response)->setHeaders([
         //     // "Expires: Sun, 22 Jun 1997 04:00:00 GMT",
         //     // "Cache-Control: no-cache, must-revalidate",
@@ -54,11 +55,12 @@ class HomeController extends BaseController
         //     $data = []
         // );
         $this->dd(           
-            // (new Validator((new Request()), [
-            //     'name' => ['string', 'empty']
-            // ]))->validate(),
-            // Application::$app->database,
-            $userModel
+        //     // (new Validator((new Request()), [
+        //     //     'name' => ['string', 'empty']
+        //     // ]))->validate(),
+        //     // Application::$app->database,
+        //     // $userModel
+            $users
         );
     }
 }

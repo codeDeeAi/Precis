@@ -136,15 +136,17 @@ class Router
         string|array|callable $middleware = []
     ): void {
 
+        $action = "handle";
+
         if (is_callable($middleware)) {
             call_user_func($middleware);
         }
         if (is_string($middleware) && !empty($middleware)) {
-            call_user_func(new $middleware);
+            call_user_func([new $middleware, $action]);
         }
         if (is_array($middleware) && !empty($middleware)) {
             foreach ($middleware as $value) {
-                call_user_func(new $value);
+                call_user_func([new $value, $action]);
             }
         }
     }

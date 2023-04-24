@@ -4,18 +4,15 @@ declare(strict_types=1);
 
 namespace App\Models;
 
-use App\Core\Model as BaseModel;
+use Illuminate\Database\Eloquent\Model as EloquentModel;
 
 # User Model
-class UserModel extends BaseModel
+class UserModel extends EloquentModel
 {
-    public function __construct()
-    {
-        # Set default model properties ('TABLE', 'COLUMNS')
-        $this->setProperties([
-            'TABLE' => 'users',
-            'COLUMNS' => ['username', 'password', 'email', 'first_name', 'last_name', 'created', 'updated'],
-            'HIDDEN_COLUMNS' => ['password']
-        ]);
-    }
+    protected $table = "users";
+
+    protected $fillable = ['username', 'password', 'email', 'first_name', 'last_name', 'created', 'updated'];
+    
+    protected $hidden = ['password'];
+    
 }

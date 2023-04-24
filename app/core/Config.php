@@ -21,14 +21,15 @@ class Config
     {
         return [
             'BASE_VIEW_PATH' => dirname(__DIR__, 1) . '/views',
-            'USE_DATABASE' => true,
-            'DATABASE_ADAPTER' => 'mysql',
-            'DATABASE_ENVIRONMENT' => 'development',
-            'DATABASE_HOST' => 'localhost',
-            'DATABASE_NAME' => 'custom_framework',
-            'DATABASE_USERNAME' => 'root',
-            'DATABASE_PASSWORD' => '',
-            'DATABASE_CHARSET' => 'utf8',
+            'USE_DATABASE' => (bool) getenv('USE_DATABASE') ?? true,
+            'DATABASE_ADAPTER' => getenv('DATABASE_ADAPTER') ?? 'mysql',
+            'DATABASE_DRIVER' => getenv('DATABASE_DRIVER') ?? 'mysql',
+            'DATABASE_ENVIRONMENT' => getenv('DATABASE_ENVIRONMENT') ?? 'development',
+            'DATABASE_HOST' => getenv('DATABASE_HOST') ?? 'localhost',
+            'DATABASE_NAME' => getenv('DATABASE_NAME') ?? 'custom_framework',
+            'DATABASE_USERNAME' => getenv('DATABASE_USERNAME') ?? 'root',
+            'DATABASE_PASSWORD' => getenv('DATABASE_PASSWORD') ?? '',
+            'DATABASE_CHARSET' => getenv('DATABASE_CHARSET') ?? 'utf8',
         ];
     }
 }
